@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_help"
+        android:title="@string/menu_main_change_location"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/ic_uninstall"
+        android:title="@string/menu_main_settings"
+        app:showAsAction="never"/>
+</menu>
