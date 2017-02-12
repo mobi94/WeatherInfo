@@ -1,4 +1,4 @@
-package com.breezee.sergeystasyuk.weatherinfo;
+package com.breezee.sergeystasyuk.weatherinfo.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.breezee.sergeystasyuk.weatherinfo.R;
 
 /**
  * Created by User on 09.02.2017.

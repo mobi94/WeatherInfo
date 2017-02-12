@@ -4,7 +4,7 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.breezee.sergeystasyuk.weatherinfo.MainActivity"
+    tools:context="com.breezee.sergeystasyuk.weatherinfo.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <ListView

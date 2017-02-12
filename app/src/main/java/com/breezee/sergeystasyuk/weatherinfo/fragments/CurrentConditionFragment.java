@@ -1,5 +1,6 @@
-package com.breezee.sergeystasyuk.weatherinfo;
+package com.breezee.sergeystasyuk.weatherinfo.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.breezee.sergeystasyuk.weatherinfo.R;
+import com.breezee.sergeystasyuk.weatherinfo.pojos.geoposition.GeopositionSearchResult;
+import com.breezee.sergeystasyuk.weatherinfo.presenters.GeopositionSearchPresenter;
+import com.breezee.sergeystasyuk.weatherinfo.views.GeopositionSearchView;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import static android.R.id.list;
 
@@ -16,13 +27,15 @@ import static android.R.id.list;
  * Created by User on 09.02.2017.
  */
 
-public class CurrentConditionFragment extends Fragment {
+public class CurrentConditionFragment extends Fragment implements GeopositionSearchView{
 
     String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
             "Костя", "Игорь", "Анна", "Денис", "Андрей", "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
             "Костя", "Игорь", "Анна", "Денис", "Андрей" };
 
     RecyclerView recyclerView;
+    GeopositionSearchPresenter presenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_current_condition, container, false);
@@ -34,6 +47,30 @@ public class CurrentConditionFragment extends Fragment {
         recyclerView.setAdapter(itemArrayAdapter);
 
         return view;
+    }
+
+    public void onLocationDefined(Location location){
+        presenter = new GeopositionSearchPresenter(this);
+        Map<String, String> request = new HashMap<>();
+        request.put("apikey", getString(R.string.accuweather_api_key));
+        request.put("q", String.format(Locale.US, "%f,%f", location.getLatitude(), location.getLongitude()));
+        request.put("language", getString(R.string.geoposition_result_language));
+        presenter.getData(request);
+    }
+
+    @Override
+    public void showGeopositionSearchResult(GeopositionSearchResult geopositionSearchResult) {
+        Toast.makeText(getActivity(), geopositionSearchResult.getLocalizedName(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 
     public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.ViewHolder> {

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WeatherInfo</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="menu_main_change_location">Изменить расположение</string>
+    <string name="menu_main_settings">Настройки</string>
+
+    <string name="accuweather_api_key">M1WSwPglWwVHjqvdeFuIZwUkEMBlqolS</string>
+    <string name="geoposition_result_language">ru</string>
+</resources>

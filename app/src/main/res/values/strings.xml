@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">WeatherInfo</string>
 
-    <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="menu_main_change_location">Change location</string>
     <string name="menu_main_settings">Settings</string>
+
+    <string name="accuweather_api_key">M1WSwPglWwVHjqvdeFuIZwUkEMBlqolS</string>
+    <string name="geoposition_result_language">en</string>
+
 </resources>
