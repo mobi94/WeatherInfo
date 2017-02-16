@@ -1,40 +1,42 @@
 package com.breezee.sergeystasyuk.weatherinfo.presenters;
 
+import android.os.Bundle;
+
 import com.breezee.sergeystasyuk.weatherinfo.models.GeopositionSearchModel;
 import com.breezee.sergeystasyuk.weatherinfo.models.GeopositionSearchModelImpl;
 import com.breezee.sergeystasyuk.weatherinfo.pojos.geoposition.GeopositionSearchResult;
-import com.breezee.sergeystasyuk.weatherinfo.views.GeopositionSearchView;
+import com.breezee.sergeystasyuk.weatherinfo.views.AccuweatherAPIView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Map;
 
-import rx.Subscription;
+import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.subscriptions.Subscriptions;
 
 
 /**
  * Created by User on 12.02.2017.
  */
 
-public class GeopositionSearchPresenter implements BasePresenter<Map<String, String>> {
-    private GeopositionSearchModel model = new GeopositionSearchModelImpl();
-    private Subscription subscription = Subscriptions.empty();
-    private GeopositionSearchView view;
+public class GeopositionSearchPresenter extends BasePresenter<GeopositionSearchModel, GeopositionSearchResult> {
 
-    public GeopositionSearchPresenter(GeopositionSearchView view) {
+    public GeopositionSearchPresenter(AccuweatherAPIView<GeopositionSearchResult> view) {
+        super(view);
         this.view = view;
+        model = new GeopositionSearchModelImpl();
     }
 
-    @Override
     public void getData(Map<String, String> request) {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
+        unsubscribeSubscription();
 
         Action1<GeopositionSearchResult> onNextAction = geopositionSearchResult -> {
             if (geopositionSearchResult != null) {
-                view.showGeopositionSearchResult(geopositionSearchResult);
+                view.showSearchResult(geopositionSearchResult);
             }
         };
         Action1<Throwable> onErrorAction = throwable -> view.showError(throwable.getMessage());
@@ -49,8 +51,6 @@ public class GeopositionSearchPresenter implements BasePresenter<Map<String, Str
 
     @Override
     public void onDestroy() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
+        unsubscribeSubscription();
     }
 }

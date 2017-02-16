@@ -1,10 +1,10 @@
 
-package com.breezee.sergeystasyuk.weatherinfo.pojos.dailyforecast;
+package com.breezee.sergeystasyuk.weatherinfo.pojos.fivedaysforecast;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ice {
+public class Minimum {
 
     @SerializedName("Value")
     @Expose

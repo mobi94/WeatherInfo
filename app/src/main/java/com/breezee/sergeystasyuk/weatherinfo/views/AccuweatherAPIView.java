@@ -6,8 +6,8 @@ import com.breezee.sergeystasyuk.weatherinfo.pojos.geoposition.GeopositionSearch
  * Created by User on 12.02.2017.
  */
 
-public interface GeopositionSearchView {
-    void showGeopositionSearchResult(GeopositionSearchResult geopositionSearchResult);
+public interface AccuweatherAPIView<P> {
+    void showSearchResult(P p);
     void showError(String error);
     void onComplete();
 }

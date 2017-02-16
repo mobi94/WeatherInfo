@@ -18,8 +18,7 @@ import rx.schedulers.Schedulers;
  * Created by User on 12.02.2017.
  */
 
-public class GeopositionSearchModelImpl implements GeopositionSearchModel
-{
+public class GeopositionSearchModelImpl implements GeopositionSearchModel {
     private LocationsAPIInterface apiInterface;
 
     public GeopositionSearchModelImpl() {

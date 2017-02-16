@@ -11,7 +11,7 @@ public class AirAndPollen {
     private String name;
     @SerializedName("Value")
     @Expose
-    private Integer value;
+    private Float value;
     @SerializedName("Category")
     @Expose
     private String category;
@@ -30,11 +30,11 @@ public class AirAndPollen {
         this.name = name;
     }
 
-    public Integer getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 

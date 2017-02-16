@@ -3,6 +3,7 @@ package com.breezee.sergeystasyuk.weatherinfo.fragments;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,65 +14,189 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.breezee.sergeystasyuk.weatherinfo.R;
+import com.breezee.sergeystasyuk.weatherinfo.TrackLocation;
+import com.breezee.sergeystasyuk.weatherinfo.activities.MainActivity;
+import com.breezee.sergeystasyuk.weatherinfo.pojos.dailyforecast.DailyForecastResult;
 import com.breezee.sergeystasyuk.weatherinfo.pojos.geoposition.GeopositionSearchResult;
+import com.breezee.sergeystasyuk.weatherinfo.presenters.DailyForecastPresenter;
 import com.breezee.sergeystasyuk.weatherinfo.presenters.GeopositionSearchPresenter;
-import com.breezee.sergeystasyuk.weatherinfo.views.GeopositionSearchView;
+import com.breezee.sergeystasyuk.weatherinfo.views.AccuweatherAPIView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static android.R.id.list;
-
 /**
  * Created by User on 09.02.2017.
  */
 
-public class CurrentConditionFragment extends Fragment implements GeopositionSearchView{
+public class CurrentConditionFragment extends Fragment implements AccuweatherAPIView<DailyForecastResult> {
 
     String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
             "Костя", "Игорь", "Анна", "Денис", "Андрей", "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
             "Костя", "Игорь", "Анна", "Денис", "Андрей" };
 
     RecyclerView recyclerView;
-    GeopositionSearchPresenter presenter;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    GeopositionSearchPresenter geopositionSearchPresenter;
+    DailyForecastPresenter dailyForecastPresenter;
+
+    GeopositionSearchResult geopositionSearchResult;
+    DailyForecastResult dailyForecastResult;
+
+    TrackLocation trackLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_current_condition, container, false);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            trackLocation.buildRequest();
+        });
         ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(R.layout.list_item);
         recyclerView = (RecyclerView) view.findViewById(R.id.listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemArrayAdapter);
 
+        trackLocation = new TrackLocation(getContext(), this::sendGeopositionSearchRequest);
+
+        if (savedInstanceState == null) {
+            if (trackLocation.isNetworkAvailable()) {
+                swipeRefreshLayout.setRefreshing(true);
+                trackLocation.buildRequest();
+            }
+        }
+        else getData();
+//        if (!getData()) {
+//            if (trackLocation.isNetworkAvailable())
+//                trackLocation.buildRequest();
+//        }
+
+        setupPresenters();
+
         return view;
     }
 
-    public void onLocationDefined(Location location){
-        presenter = new GeopositionSearchPresenter(this);
+    public void setupPresenters(){
+        geopositionSearchPresenter = new GeopositionSearchPresenter(new AccuweatherAPIView<GeopositionSearchResult>() {
+            @Override
+            public void showSearchResult(GeopositionSearchResult geopositionSearchResult) {
+                CurrentConditionFragment.this.geopositionSearchResult = geopositionSearchResult;
+                sendDailyForecastRequest(geopositionSearchResult);
+            }
+
+            @Override
+            public void showError(String error) {
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+        dailyForecastPresenter = new DailyForecastPresenter(this);
+    }
+
+    public void saveData(){
+        MainActivity.saveObjectToSharedPreference(getContext(),
+                MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, geopositionSearchResult);
+        MainActivity.saveObjectToSharedPreference(getContext(),
+                MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, dailyForecastResult);
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+//        sharedPreferences.edit().putString(MainActivity.GEOPOSITION_DATA, new Gson().toJson(geopositionSearchResult)).apply();
+//        sharedPreferences.edit().putString(MainActivity.DAILY_FORECAST_DATA, new Gson().toJson(dailyForecastResult)).apply();
+    }
+
+    public void getData() {
+        geopositionSearchResult = MainActivity.getSavedObjectFromPreference(getContext(),
+                MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, GeopositionSearchResult.class);
+        dailyForecastResult = MainActivity.getSavedObjectFromPreference(getContext(),
+                MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, DailyForecastResult.class);
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+//        if (sharedPreferences.contains(MainActivity.GEOPOSITION_DATA) && sharedPreferences.contains(MainActivity.DAILY_FORECAST_DATA)) {
+//            geopositionSearchResult = new Gson().fromJson(sharedPreferences.getString(MainActivity.GEOPOSITION_DATA, "{}"),
+//                    new TypeToken<GeopositionSearchResult>() {}.getType());
+//            dailyForecastResult = new Gson().fromJson(sharedPreferences.getString(MainActivity.DAILY_FORECAST_DATA, "{}"),
+//                    new TypeToken<DailyForecastResult>() {}.getType());
+//            return true;
+//        }
+//        else return false;
+    }
+
+    private void sendGeopositionSearchRequest(Location location){
         Map<String, String> request = new HashMap<>();
         request.put("apikey", getString(R.string.accuweather_api_key));
         request.put("q", String.format(Locale.US, "%f,%f", location.getLatitude(), location.getLongitude()));
         request.put("language", getString(R.string.geoposition_result_language));
-        presenter.getData(request);
+        geopositionSearchPresenter.getData(request);
     }
 
     @Override
-    public void showGeopositionSearchResult(GeopositionSearchResult geopositionSearchResult) {
-        Toast.makeText(getActivity(), geopositionSearchResult.getLocalizedName(), Toast.LENGTH_LONG).show();
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putSerializable(MainActivity.GEOPOSITION_DATA, new Gson().toJson(geopositionSearchPresenter));
+//        outState.putSerializable(MainActivity.DAILY_FORECAST_DATA, new Gson().toJson(dailyForecastResult));
+//        geopositionSearchPresenter.unsubscribeSubscription();
+//        dailyForecastPresenter.unsubscribeSubscription();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        trackLocation.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        trackLocation.onStop();
+//        geopositionSearchPresenter.onDestroy();
+//        dailyForecastPresenter.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        dailyForecastPresenter.onDestroy();
+        geopositionSearchPresenter.onDestroy();
+    }
+
+    public void sendDailyForecastRequest(GeopositionSearchResult geopositionSearchResult){
+        String locationKey = geopositionSearchResult.getKey();
+        Map<String, String> request = new HashMap<>();
+        request.put("apikey", getString(R.string.accuweather_api_key));
+        request.put("language", getString(R.string.geoposition_result_language));
+        request.put("details", "true");
+        request.put("metric", "true");
+        dailyForecastPresenter.getData(locationKey, request);
+
+    }
+
+    @Override
+    public void showSearchResult(DailyForecastResult dailyForecastResult) {
+        swipeRefreshLayout.setRefreshing(false);
+        this.dailyForecastResult = dailyForecastResult;
+        saveData();
+        Toast.makeText(getActivity(), dailyForecastResult.getDailyForecasts().get(0).getTemperature().getMinimum().getValue().toString(),
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showError(String error) {
+        swipeRefreshLayout.setRefreshing(false);
         Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onComplete() {
-
-    }
+    public void onComplete() {}
 
     public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.ViewHolder> {
 

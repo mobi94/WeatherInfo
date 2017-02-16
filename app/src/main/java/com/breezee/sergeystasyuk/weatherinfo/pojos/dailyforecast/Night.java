@@ -53,10 +53,10 @@ public class Night {
     private Ice_ ice;
     @SerializedName("HoursOfPrecipitation")
     @Expose
-    private Integer hoursOfPrecipitation;
+    private Float hoursOfPrecipitation;
     @SerializedName("HoursOfRain")
     @Expose
-    private Integer hoursOfRain;
+    private Float hoursOfRain;
     @SerializedName("CloudCover")
     @Expose
     private Integer cloudCover;
@@ -181,19 +181,19 @@ public class Night {
         this.ice = ice;
     }
 
-    public Integer getHoursOfPrecipitation() {
+    public Float getHoursOfPrecipitation() {
         return hoursOfPrecipitation;
     }
 
-    public void setHoursOfPrecipitation(Integer hoursOfPrecipitation) {
+    public void setHoursOfPrecipitation(Float hoursOfPrecipitation) {
         this.hoursOfPrecipitation = hoursOfPrecipitation;
     }
 
-    public Integer getHoursOfRain() {
+    public Float getHoursOfRain() {
         return hoursOfRain;
     }
 
-    public void setHoursOfRain(Integer hoursOfRain) {
+    public void setHoursOfRain(Float hoursOfRain) {
         this.hoursOfRain = hoursOfRain;
     }
 
