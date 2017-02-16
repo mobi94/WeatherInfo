@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ import java.util.Map;
  * Created by User on 09.02.2017.
  */
 
-public class CurrentConditionFragment extends Fragment implements AccuweatherAPIView<DailyForecastResult> {
+public class CurrentConditionFragment extends Fragment implements AccuweatherAPIView<List<DailyForecastResult>> {
 
     String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
             "Костя", "Игорь", "Анна", "Денис", "Андрей", "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
@@ -175,17 +176,16 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
         request.put("apikey", getString(R.string.accuweather_api_key));
         request.put("language", getString(R.string.geoposition_result_language));
         request.put("details", "true");
-        request.put("metric", "true");
         dailyForecastPresenter.getData(locationKey, request);
 
     }
 
     @Override
-    public void showSearchResult(DailyForecastResult dailyForecastResult) {
+    public void showSearchResult(List<DailyForecastResult> dailyForecastResult) {
         swipeRefreshLayout.setRefreshing(false);
-        this.dailyForecastResult = dailyForecastResult;
+        this.dailyForecastResult = dailyForecastResult.get(0);
         saveData();
-        Toast.makeText(getActivity(), dailyForecastResult.getDailyForecasts().get(0).getTemperature().getMinimum().getValue().toString(),
+        Toast.makeText(getActivity(), dailyForecastResult.get(0).getTemperature().getMetric().getValue().toString(),
                 Toast.LENGTH_LONG).show();
     }
 

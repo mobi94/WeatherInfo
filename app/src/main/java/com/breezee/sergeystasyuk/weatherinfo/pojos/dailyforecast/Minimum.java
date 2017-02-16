@@ -6,38 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Minimum {
 
-    @SerializedName("Value")
+    @SerializedName("Metric")
     @Expose
-    private Float value;
-    @SerializedName("Unit")
+    private Metric______________________ metric;
+    @SerializedName("Imperial")
     @Expose
-    private String unit;
-    @SerializedName("UnitType")
-    @Expose
-    private Integer unitType;
+    private Imperial______________________ imperial;
 
-    public Float getValue() {
-        return value;
+    public Metric______________________ getMetric() {
+        return metric;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setMetric(Metric______________________ metric) {
+        this.metric = metric;
     }
 
-    public String getUnit() {
-        return unit;
+    public Imperial______________________ getImperial() {
+        return imperial;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(Integer unitType) {
-        this.unitType = unitType;
+    public void setImperial(Imperial______________________ imperial) {
+        this.imperial = imperial;
     }
 
 }

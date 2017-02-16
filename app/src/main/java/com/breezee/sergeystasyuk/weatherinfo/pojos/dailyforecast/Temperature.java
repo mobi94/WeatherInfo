@@ -6,27 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Temperature {
 
-    @SerializedName("Minimum")
+    @SerializedName("Metric")
     @Expose
-    private Minimum minimum;
-    @SerializedName("Maximum")
+    private Metric metric;
+    @SerializedName("Imperial")
     @Expose
-    private Maximum maximum;
+    private Imperial imperial;
 
-    public Minimum getMinimum() {
-        return minimum;
+    public Metric getMetric() {
+        return metric;
     }
 
-    public void setMinimum(Minimum minimum) {
-        this.minimum = minimum;
+    public void setMetric(Metric metric) {
+        this.metric = metric;
     }
 
-    public Maximum getMaximum() {
-        return maximum;
+    public Imperial getImperial() {
+        return imperial;
     }
 
-    public void setMaximum(Maximum maximum) {
-        this.maximum = maximum;
+    public void setImperial(Imperial imperial) {
+        this.imperial = imperial;
     }
 
 }

@@ -6,38 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Maximum_ {
 
-    @SerializedName("Value")
+    @SerializedName("Metric")
     @Expose
-    private Float value;
-    @SerializedName("Unit")
+    private Metric_________________________ metric;
+    @SerializedName("Imperial")
     @Expose
-    private String unit;
-    @SerializedName("UnitType")
-    @Expose
-    private Integer unitType;
+    private Imperial_________________________ imperial;
 
-    public Float getValue() {
-        return value;
+    public Metric_________________________ getMetric() {
+        return metric;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setMetric(Metric_________________________ metric) {
+        this.metric = metric;
     }
 
-    public String getUnit() {
-        return unit;
+    public Imperial_________________________ getImperial() {
+        return imperial;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(Integer unitType) {
-        this.unitType = unitType;
+    public void setImperial(Imperial_________________________ imperial) {
+        this.imperial = imperial;
     }
 
 }

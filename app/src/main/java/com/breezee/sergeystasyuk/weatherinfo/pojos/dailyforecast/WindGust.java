@@ -9,9 +9,6 @@ public class WindGust {
     @SerializedName("Speed")
     @Expose
     private Speed_ speed;
-    @SerializedName("Direction")
-    @Expose
-    private Direction_ direction;
 
     public Speed_ getSpeed() {
         return speed;
@@ -19,14 +16,6 @@ public class WindGust {
 
     public void setSpeed(Speed_ speed) {
         this.speed = speed;
-    }
-
-    public Direction_ getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Direction_ direction) {
-        this.direction = direction;
     }
 
 }

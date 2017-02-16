@@ -4,6 +4,7 @@ import com.breezee.sergeystasyuk.weatherinfo.pojos.dailyforecast.DailyForecastRe
 import com.breezee.sergeystasyuk.weatherinfo.pojos.fivedaysforecast.FiveDaysForecastResult;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -32,14 +33,14 @@ public class ForecastModelImpl implements ForecastModel {
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .setLenient()
                         .create()))
-                .baseUrl("http://dataservice.accuweather.com/forecasts/v1/daily/")
+                .baseUrl("http://dataservice.accuweather.com/")
                 .client(client)
                 .build();
         apiInterface = retrofit.create(ForecastAPIInterface.class);
     }
 
     @Override
-    public Observable<DailyForecastResult> getDailyForecast(String locationKey, Map<String, String> request) {
+    public Observable<List<DailyForecastResult>> getDailyForecast(String locationKey, Map<String, String> request) {
         return apiInterface.getDailyForecast(locationKey, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

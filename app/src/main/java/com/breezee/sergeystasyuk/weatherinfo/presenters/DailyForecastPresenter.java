@@ -7,6 +7,7 @@ import com.breezee.sergeystasyuk.weatherinfo.models.ForecastModelImpl;
 import com.breezee.sergeystasyuk.weatherinfo.pojos.dailyforecast.DailyForecastResult;
 import com.breezee.sergeystasyuk.weatherinfo.views.AccuweatherAPIView;
 
+import java.util.List;
 import java.util.Map;
 
 import flexjson.JSONDeserializer;
@@ -19,9 +20,9 @@ import rx.functions.Action1;
  * Created by User on 13.02.2017.
  */
 
-public class DailyForecastPresenter extends BasePresenter<ForecastModel, DailyForecastResult> {
+public class DailyForecastPresenter extends BasePresenter<ForecastModel, List<DailyForecastResult>> {
 
-    public DailyForecastPresenter(AccuweatherAPIView<DailyForecastResult> view) {
+    public DailyForecastPresenter(AccuweatherAPIView<List<DailyForecastResult>> view) {
         super(view);
         model = new ForecastModelImpl();
     }
@@ -29,7 +30,7 @@ public class DailyForecastPresenter extends BasePresenter<ForecastModel, DailyFo
     public void getData(String locationKey, Map<String, String> request) {
         unsubscribeSubscription();
 
-        Action1<DailyForecastResult> onNextAction = dailyForecastResult -> {
+        Action1<List<DailyForecastResult>> onNextAction = dailyForecastResult -> {
             if (dailyForecastResult != null) {
                 view.showSearchResult(dailyForecastResult);
             }

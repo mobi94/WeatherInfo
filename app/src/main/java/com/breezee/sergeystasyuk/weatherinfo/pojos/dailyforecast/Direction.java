@@ -8,7 +8,7 @@ public class Direction {
 
     @SerializedName("Degrees")
     @Expose
-    private Float degrees;
+    private Integer degrees;
     @SerializedName("Localized")
     @Expose
     private String localized;
@@ -16,11 +16,11 @@ public class Direction {
     @Expose
     private String english;
 
-    public Float getDegrees() {
+    public Integer getDegrees() {
         return degrees;
     }
 
-    public void setDegrees(Float degrees) {
+    public void setDegrees(Integer degrees) {
         this.degrees = degrees;
     }
 

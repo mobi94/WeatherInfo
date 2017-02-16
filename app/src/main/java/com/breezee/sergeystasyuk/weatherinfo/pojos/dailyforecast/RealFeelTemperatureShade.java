@@ -6,27 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class RealFeelTemperatureShade {
 
-    @SerializedName("Minimum")
+    @SerializedName("Metric")
     @Expose
-    private Minimum__ minimum;
-    @SerializedName("Maximum")
+    private Metric__ metric;
+    @SerializedName("Imperial")
     @Expose
-    private Maximum__ maximum;
+    private Imperial__ imperial;
 
-    public Minimum__ getMinimum() {
-        return minimum;
+    public Metric__ getMetric() {
+        return metric;
     }
 
-    public void setMinimum(Minimum__ minimum) {
-        this.minimum = minimum;
+    public void setMetric(Metric__ metric) {
+        this.metric = metric;
     }
 
-    public Maximum__ getMaximum() {
-        return maximum;
+    public Imperial__ getImperial() {
+        return imperial;
     }
 
-    public void setMaximum(Maximum__ maximum) {
-        this.maximum = maximum;
+    public void setImperial(Imperial__ imperial) {
+        this.imperial = imperial;
     }
 
 }

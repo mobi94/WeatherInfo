@@ -3,6 +3,7 @@ package com.breezee.sergeystasyuk.weatherinfo.models;
 import com.breezee.sergeystasyuk.weatherinfo.pojos.dailyforecast.DailyForecastResult;
 import com.breezee.sergeystasyuk.weatherinfo.pojos.fivedaysforecast.FiveDaysForecastResult;
 
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -12,6 +13,6 @@ import rx.Observable;
  */
 
 public interface ForecastModel {
-    Observable<DailyForecastResult> getDailyForecast(String locationKey, Map<String, String> request);
+    Observable<List<DailyForecastResult>> getDailyForecast(String locationKey, Map<String, String> request);
     Observable<FiveDaysForecastResult> getFiveDaysForecast(String locationKey, Map<String, String> request);
 }

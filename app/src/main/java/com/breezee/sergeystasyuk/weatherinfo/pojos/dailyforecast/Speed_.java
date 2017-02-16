@@ -6,38 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Speed_ {
 
-    @SerializedName("Value")
+    @SerializedName("Metric")
     @Expose
-    private Float value;
-    @SerializedName("Unit")
+    private Metric_____ metric;
+    @SerializedName("Imperial")
     @Expose
-    private String unit;
-    @SerializedName("UnitType")
-    @Expose
-    private Integer unitType;
+    private Imperial_____ imperial;
 
-    public Float getValue() {
-        return value;
+    public Metric_____ getMetric() {
+        return metric;
     }
 
-    public void setValue(Float value) {
-        this.value = value;
+    public void setMetric(Metric_____ metric) {
+        this.metric = metric;
     }
 
-    public String getUnit() {
-        return unit;
+    public Imperial_____ getImperial() {
+        return imperial;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getUnitType() {
-        return unitType;
-    }
-
-    public void setUnitType(Integer unitType) {
-        this.unitType = unitType;
+    public void setImperial(Imperial_____ imperial) {
+        this.imperial = imperial;
     }
 
 }
