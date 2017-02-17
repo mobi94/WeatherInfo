@@ -4,9 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +18,6 @@ import com.breezee.sergeystasyuk.weatherinfo.pojos.geoposition.GeopositionSearch
 import com.breezee.sergeystasyuk.weatherinfo.presenters.DailyForecastPresenter;
 import com.breezee.sergeystasyuk.weatherinfo.presenters.GeopositionSearchPresenter;
 import com.breezee.sergeystasyuk.weatherinfo.views.AccuweatherAPIView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +30,18 @@ import java.util.Map;
 
 public class CurrentConditionFragment extends Fragment implements AccuweatherAPIView<List<DailyForecastResult>> {
 
-    String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
-            "Костя", "Игорь", "Анна", "Денис", "Андрей", "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
-            "Костя", "Игорь", "Анна", "Денис", "Андрей" };
+    TextView temperature;
+    TextView city;
+    TextView description;
+    TextView realFeel;
+    TextView realFeelShadow;
+    TextView wind;
+    TextView pressure;
+    TextView relativeHumidity;
+    TextView last6Hours;
+    TextView last12Hours;
+    TextView last24Hours;
 
-    RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 
     GeopositionSearchPresenter geopositionSearchPresenter;
@@ -54,16 +56,13 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_current_condition, container, false);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        setupViews(view);
+        setupPresenters();
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             trackLocation.buildRequest();
         });
-        ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(R.layout.list_item);
-        recyclerView = (RecyclerView) view.findViewById(R.id.listview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemArrayAdapter);
 
         trackLocation = new TrackLocation(getContext(), this::sendGeopositionSearchRequest);
 
@@ -73,13 +72,10 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
                 trackLocation.buildRequest();
             }
         }
-        else getData();
-//        if (!getData()) {
-//            if (trackLocation.isNetworkAvailable())
-//                trackLocation.buildRequest();
-//        }
-
-        setupPresenters();
+        else {
+            getData();
+            inflateViews();
+        }
 
         return view;
     }
@@ -106,14 +102,46 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
         dailyForecastPresenter = new DailyForecastPresenter(this);
     }
 
+    public void setupViews(View view){
+        temperature = (TextView) getActivity().findViewById(R.id.current_temperature);
+        city = (TextView) getActivity().findViewById(R.id.city);
+        description = (TextView) getActivity().findViewById(R.id.weather_description);
+        realFeel = (TextView) view.findViewById(R.id.real_feel_value);
+        realFeelShadow = (TextView) view.findViewById(R.id.real_feel_shadow_value);
+        wind = (TextView) view.findViewById(R.id.wind_value);
+        pressure = (TextView) view.findViewById(R.id.pressure_value);
+        relativeHumidity = (TextView) view.findViewById(R.id.relative_humidity_value);
+        last6Hours = (TextView) view.findViewById(R.id.last6hours_value);
+        last12Hours = (TextView) view.findViewById(R.id.last12hours_value);
+        last24Hours = (TextView) view.findViewById(R.id.last24hours_value);
+    }
+
+    public void inflateViews(){
+        ((TextView) getActivity().findViewById(R.id.separator)).setText("|");
+        temperature.setText(dailyForecastResult.getTemperature().getMetric().getValue().toString() + " °C");
+        city.setText(geopositionSearchResult.getLocalizedName());
+        description.setText(dailyForecastResult.getWeatherText());
+        realFeel.setText(dailyForecastResult.getRealFeelTemperature().getMetric().getValue().toString() + " °C");
+        realFeelShadow.setText(dailyForecastResult.getRealFeelTemperatureShade().getMetric().getValue().toString() + " °C");
+        wind.setText(dailyForecastResult.getWind().getSpeed().getMetric().getValue().toString() + " "
+                + getString(R.string.current_forecast_wind_value) + " "
+                + dailyForecastResult.getWind().getDirection().getLocalized());
+        pressure.setText(dailyForecastResult.getPressure().getMetric().getValue().toString() + " "
+                + getString(R.string.current_forecast_pressure_value));
+        relativeHumidity.setText(dailyForecastResult.getRelativeHumidity().toString() + " %");
+        last6Hours.setText(dailyForecastResult.getTemperatureSummary().getPast6HourRange().getMinimum().getMetric().getValue().toString() +
+                "/" + dailyForecastResult.getTemperatureSummary().getPast6HourRange().getMaximum().getMetric().getValue().toString() + " °C");
+        last12Hours.setText(dailyForecastResult.getTemperatureSummary().getPast12HourRange().getMinimum().getMetric().getValue().toString() +
+                "/" + dailyForecastResult.getTemperatureSummary().getPast12HourRange().getMaximum().getMetric().getValue().toString() + " °C");
+        last24Hours.setText(dailyForecastResult.getTemperatureSummary().getPast24HourRange().getMinimum().getMetric().getValue().toString() +
+                "/" + dailyForecastResult.getTemperatureSummary().getPast24HourRange().getMaximum().getMetric().getValue().toString() + " °C");
+    }
+
     public void saveData(){
         MainActivity.saveObjectToSharedPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, geopositionSearchResult);
         MainActivity.saveObjectToSharedPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, dailyForecastResult);
-//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-//        sharedPreferences.edit().putString(MainActivity.GEOPOSITION_DATA, new Gson().toJson(geopositionSearchResult)).apply();
-//        sharedPreferences.edit().putString(MainActivity.DAILY_FORECAST_DATA, new Gson().toJson(dailyForecastResult)).apply();
     }
 
     public void getData() {
@@ -121,15 +149,6 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
                 MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, GeopositionSearchResult.class);
         dailyForecastResult = MainActivity.getSavedObjectFromPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, DailyForecastResult.class);
-//        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MainActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-//        if (sharedPreferences.contains(MainActivity.GEOPOSITION_DATA) && sharedPreferences.contains(MainActivity.DAILY_FORECAST_DATA)) {
-//            geopositionSearchResult = new Gson().fromJson(sharedPreferences.getString(MainActivity.GEOPOSITION_DATA, "{}"),
-//                    new TypeToken<GeopositionSearchResult>() {}.getType());
-//            dailyForecastResult = new Gson().fromJson(sharedPreferences.getString(MainActivity.DAILY_FORECAST_DATA, "{}"),
-//                    new TypeToken<DailyForecastResult>() {}.getType());
-//            return true;
-//        }
-//        else return false;
     }
 
     private void sendGeopositionSearchRequest(Location location){
@@ -138,29 +157,6 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
         request.put("q", String.format(Locale.US, "%f,%f", location.getLatitude(), location.getLongitude()));
         request.put("language", getString(R.string.geoposition_result_language));
         geopositionSearchPresenter.getData(request);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putSerializable(MainActivity.GEOPOSITION_DATA, new Gson().toJson(geopositionSearchPresenter));
-//        outState.putSerializable(MainActivity.DAILY_FORECAST_DATA, new Gson().toJson(dailyForecastResult));
-//        geopositionSearchPresenter.unsubscribeSubscription();
-//        dailyForecastPresenter.unsubscribeSubscription();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        trackLocation.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-//        trackLocation.onStop();
-//        geopositionSearchPresenter.onDestroy();
-//        dailyForecastPresenter.onDestroy();
     }
 
     @Override
@@ -185,8 +181,7 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
         swipeRefreshLayout.setRefreshing(false);
         this.dailyForecastResult = dailyForecastResult.get(0);
         saveData();
-        Toast.makeText(getActivity(), dailyForecastResult.get(0).getTemperature().getMetric().getValue().toString(),
-                Toast.LENGTH_LONG).show();
+        inflateViews();
     }
 
     @Override
@@ -197,48 +192,4 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
 
     @Override
     public void onComplete() {}
-
-    public class ItemArrayAdapter extends RecyclerView.Adapter<ItemArrayAdapter.ViewHolder> {
-
-        //All methods in this adapter are required for a bare minimum recyclerview adapter
-        private int listItemLayout;
-        // Constructor of the class
-        ItemArrayAdapter(int layoutId) {
-            listItemLayout = layoutId;
-        }
-
-        // get the size of the list
-        @Override
-        public int getItemCount() {
-            return names.length;
-        }
-
-
-        // specify the row layout file and click for each row
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(listItemLayout, parent, false);
-            return new ViewHolder(view);
-        }
-
-        // load data in each row element
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
-            TextView item = holder.item;
-            item.setText(names[listPosition]);
-        }
-
-        // Static inner class to initialize the views of rows
-        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            TextView item;
-            ViewHolder(View itemView) {
-                super(itemView);
-                itemView.setOnClickListener(this);
-                item = (TextView) itemView.findViewById(R.id.row_item);
-            }
-            @Override
-            public void onClick(View view) {
-            }
-        }
-    }
 }

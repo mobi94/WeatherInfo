@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(currentConditionFragment, "Current condition");
-        adapter.addFrag(forecastFragment, "5 days forecast");
+        adapter.addFrag(currentConditionFragment, getString(R.string.current_condition_fragment_title));
+        adapter.addFrag(forecastFragment, getString(R.string.forecast_fragment_title));
         viewPager.setAdapter(adapter);
     }
 

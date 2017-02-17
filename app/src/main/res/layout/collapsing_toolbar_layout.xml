@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        />
+
+    <TextView
+        android:text="@string/current_forecast_unknown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/current_temperature"
+        android:textSize="32sp"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/city"
+        android:layout_below="@+id/current_temperature"
+        android:layout_alignLeft="@+id/current_temperature"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/city"
+        android:layout_toRightOf="@+id/city"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weather_description"
+        android:layout_alignBaseline="@+id/separator"
+        android:layout_toRightOf="@+id/separator"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

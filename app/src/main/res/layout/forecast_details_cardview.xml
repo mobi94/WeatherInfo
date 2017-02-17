@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/details_card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MyCardViewStyle" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/details"
+                android:text="@string/current_forecast_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/details"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="15dp"
+                android:layout_below="@+id/details">
+
+                <TextView
+                    android:id="@+id/real_feel"
+                    android:text="@string/current_forecast_real_feel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/real_feel_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/real_feel"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/real_feel_shadow"
+                    android:text="@string/current_forecast_real_feel_shade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/real_feel"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/real_feel_shadow_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/real_feel_shadow"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/wind"
+                    android:text="@string/current_forecast_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/real_feel_shadow"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/wind_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/wind"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/pressure"
+                    android:text="@string/current_forecast_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/wind"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/pressure_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/pressure"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/relative_humidity"
+                    android:text="@string/current_forecast_relative_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pressure"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/relative_humidity_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/relative_humidity"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

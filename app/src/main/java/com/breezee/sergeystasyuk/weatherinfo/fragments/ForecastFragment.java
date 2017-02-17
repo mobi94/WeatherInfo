@@ -161,8 +161,6 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
         swipeRefreshLayout.setRefreshing(false);
         this.fiveDaysForecastResult = fiveDaysForecastResult;
         saveData();
-        Toast.makeText(getActivity(), fiveDaysForecastResult.getDailyForecasts().get(2).getTemperature().getMinimum().getValue().toString(),
-                Toast.LENGTH_LONG).show();
     }
 
     @Override

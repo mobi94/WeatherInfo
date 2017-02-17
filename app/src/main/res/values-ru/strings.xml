@@ -1,11 +1,28 @@
 <resources>
-    <string name="app_name">WeatherInfo</string>
+    <string name="app_name">Информация о погоде</string>
 
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="current_condition_fragment_title">Сейчас</string>
+    <string name="forecast_fragment_title">Ежедневно</string>
 
     <string name="menu_main_change_location">Изменить расположение</string>
     <string name="menu_main_settings">Настройки</string>
 
     <string name="accuweather_api_key">M1WSwPglWwVHjqvdeFuIZwUkEMBlqolS</string>
     <string name="geoposition_result_language">ru</string>
+
+    <string name="current_forecast_wind_value">км/ч</string>
+    <string name="current_forecast_pressure_value">мбар</string>
+    <string name="current_forecast_unknown">Неизвестно</string>
+    <string name="current_forecast_details">Детали</string>
+    <string name="current_forecast_real_feel">Ощущается</string>
+    <string name="current_forecast_real_feel_shade">Ощущается в тени</string>
+    <string name="current_forecast_wind">Ветер</string>
+    <string name="current_forecast_pressure">Давление</string>
+    <string name="current_forecast_relative_humidity">Отн. влажность</string>
+    <string name="current_forecast_temperature_summary">Сводка по температуре</string>
+    <string name="current_forecast_past_6h">За 6ч</string>
+    <string name="current_forecast_past_12h">За 12ч</string>
+    <string name="current_forecast_past_24h">За 24ч</string>
 </resources>
