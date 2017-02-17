@@ -51,6 +51,9 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
         this.listener = listener;
     }
 
+    /*
+     * GoogleApiClient initialising and LocationRequest building.
+     * */
     public void buildRequest(){
         if (checkPlayServices(context)) {
             googleApiClient = new GoogleApiClient.Builder(context)
@@ -68,18 +71,6 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-//    public void onStart(){
-//        if (googleApiClient != null) {
-//            googleApiClient.connect();
-//        }
-//    }
-
-//    public void onStop(){
-//        if (googleApiClient != null) {
-//            googleApiClient.disconnect();
-//        }
-//    }
-
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
@@ -87,7 +78,9 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
         return netInfo != null && netInfo.isConnected();
     }
 
-    // check if google play services is installed on the device
+    /*
+    * Check if google play services are installed on the device.
+    * */
     private boolean checkPlayServices(Context context) {
         final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
@@ -119,10 +112,6 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
     public void enableLocationUpdates() {
         if (googleApiClient != null) {
             try {
-//                if (!isNetworkAvailable()) {
-//
-//                }
-//                else
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
             } catch (SecurityException ex) {
                 ex.printStackTrace();
@@ -138,9 +127,6 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
         try {
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             enableLocationUpdates();
-//            if (lastLocation != null) {
-//                Toast.makeText(this, "Last location is " + lastLocation, Toast.LENGTH_SHORT).show();
-//            }
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
@@ -168,18 +154,16 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
    * */
     @Override
     public void onLocationChanged(final Location location) {
-//        if (location != null) {
-//            Toast.makeText(this, "Lat : " + location.getLatitude() + " lon : " + location.getLongitude(), Toast.LENGTH_LONG).show();
-//        } else {
-//            Toast.makeText(this, "No location found..!", Toast.LENGTH_LONG).show();
-//        }
         if (googleApiClient != null) {
+            //Once location is defined we are disabling location updates
             stopLocationUpdates();
             googleApiClient.disconnect();
         }
         if (location != null) {
             listener.onLocationTracked(location);
         }
+        else Toast.makeText(context, R.string.track_location_not_found, Toast.LENGTH_LONG).show();
+
 
     }
 
@@ -209,33 +193,30 @@ public class TrackLocation implements GoogleApiClient.ConnectionCallbacks,
                     .addLocationRequest(locationRequest);
             PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings
                     (googleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                @Override
-                public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
-                    final Status status = locationSettingsResult.getStatus();
+            result.setResultCallback(locationSettingsResult -> {
+                final Status status = locationSettingsResult.getStatus();
 
-                    switch (status.getStatusCode()) {
-                        case LocationSettingsStatusCodes.SUCCESS:
-                            Log.d("MainActivity", "onResult: SUCCESS");
-                            break;
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            Log.d("MainActivity", "onResult: RESOLUTION_REQUIRED");
-                            // Location settings are not satisfied, but this can be fixed
-                            // by showing the user a dialog.
-                            try {
-                                // Show the dialog by calling startResolutionForResult(),
-                                // and check the result in onActivityResult().
-                                status.startResolutionForResult(
-                                        (Activity)context,
-                                        REQUEST_CHECK_SETTINGS);
-                            } catch (IntentSender.SendIntentException e) {
-                                // Ignore the error.
-                            }
-                            break;
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            Log.d("MainActivity", "onResult: SETTINGS_CHANGE_UNAVAILABLE");
-                            break;
-                    }
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        Log.d("MainActivity", "onResult: SUCCESS");
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.d("MainActivity", "onResult: RESOLUTION_REQUIRED");
+                        // Location settings are not satisfied, but this can be fixed
+                        // by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(
+                                    (Activity)context,
+                                    REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.d("MainActivity", "onResult: SETTINGS_CHANGE_UNAVAILABLE");
+                        break;
                 }
             });
 

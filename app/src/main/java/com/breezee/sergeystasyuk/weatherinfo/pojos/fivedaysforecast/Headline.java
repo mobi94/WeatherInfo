@@ -11,7 +11,7 @@ public class Headline {
     private String effectiveDate;
     @SerializedName("EffectiveEpochDate")
     @Expose
-    private Integer effectiveEpochDate;
+    private Long effectiveEpochDate;
     @SerializedName("Severity")
     @Expose
     private Integer severity;
@@ -26,7 +26,7 @@ public class Headline {
     private String endDate;
     @SerializedName("EndEpochDate")
     @Expose
-    private Integer endEpochDate;
+    private Long endEpochDate;
     @SerializedName("MobileLink")
     @Expose
     private String mobileLink;
@@ -42,11 +42,11 @@ public class Headline {
         this.effectiveDate = effectiveDate;
     }
 
-    public Integer getEffectiveEpochDate() {
+    public Long getEffectiveEpochDate() {
         return effectiveEpochDate;
     }
 
-    public void setEffectiveEpochDate(Integer effectiveEpochDate) {
+    public void setEffectiveEpochDate(Long effectiveEpochDate) {
         this.effectiveEpochDate = effectiveEpochDate;
     }
 
@@ -82,11 +82,11 @@ public class Headline {
         this.endDate = endDate;
     }
 
-    public Integer getEndEpochDate() {
+    public Long getEndEpochDate() {
         return endEpochDate;
     }
 
-    public void setEndEpochDate(Integer endEpochDate) {
+    public void setEndEpochDate(Long endEpochDate) {
         this.endEpochDate = endEpochDate;
     }
 

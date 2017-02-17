@@ -29,7 +29,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/lasttime"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/background" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

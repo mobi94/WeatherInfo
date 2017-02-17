@@ -26,4 +26,10 @@
     <string name="current_forecast_past_12h">Past 12h</string>
     <string name="current_forecast_past_24h">Past 24h</string>
 
+    <string name="forecast_list_item_day">Day</string>
+    <string name="forecast_list_item_night">Night</string>
+
+    <string name="track_location_not_found">No location found..!</string>
+    <string name="no_internet_connection">No internet connection</string>
+
 </resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/current_day_card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MyCardViewStyle" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/day_of_week"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/day"
+                    android:text="@string/forecast_list_item_day"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/day_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/weather1"
+                    android:layout_toRightOf="@+id/day"
+                    android:layout_alignTop="@+id/day" />
+
+                <TextView
+                    android:id="@+id/day_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_toRightOf="@+id/day_icon"
+                    android:layout_toLeftOf="@+id/day_temperature"
+                    android:layout_alignTop="@+id/day" />
+
+                <TextView
+                    android:id="@+id/day_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/day"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/details"
+                android:background="@color/background"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/day_of_week"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/night"
+                    android:text="@string/forecast_list_item_night"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/night_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/weather33"
+                    android:layout_toRightOf="@+id/night"
+                    android:layout_alignTop="@+id/night" />
+
+                <TextView
+                    android:id="@+id/night_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/night_icon"
+                    android:layout_toEndOf="@+id/night_icon" />
+
+                <TextView
+                    android:id="@+id/night_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/night" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

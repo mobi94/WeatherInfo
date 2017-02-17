@@ -2,6 +2,7 @@ package com.breezee.sergeystasyuk.weatherinfo.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -49,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) getSupportActionBar().setTitle(R.string.app_name);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
         forecastFragment = new ForecastFragment();
         currentConditionFragment = new CurrentConditionFragment();
 
@@ -61,22 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//                switch (tab.getPosition()) {
-//                    case 0:
-//                        break;
-//                    case 1:
-//                }
-//            }
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {}
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {}
-//        });
-
     }
 
     @Override
@@ -104,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
             return gson.fromJson(sharedPreferences.getString(preferenceKey, ""), classType);
         }
         return null;
+    }
+
+    public static int getDrawableResourceId(Context c, String prefix, int weatherIcon) {
+        return c.getResources().getIdentifier(prefix + weatherIcon, "drawable", c.getPackageName());
     }
 
     private void setupViewPager(ViewPager viewPager) {

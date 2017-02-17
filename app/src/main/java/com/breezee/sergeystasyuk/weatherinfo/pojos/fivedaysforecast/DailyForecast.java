@@ -12,7 +12,7 @@ public class DailyForecast {
     private String date;
     @SerializedName("EpochDate")
     @Expose
-    private Integer epochDate;
+    private Long epochDate;
     @SerializedName("Temperature")
     @Expose
     private Temperature temperature;
@@ -40,11 +40,11 @@ public class DailyForecast {
         this.date = date;
     }
 
-    public Integer getEpochDate() {
+    public Long getEpochDate() {
         return epochDate;
     }
 
-    public void setEpochDate(Integer epochDate) {
+    public void setEpochDate(Long epochDate) {
         this.epochDate = epochDate;
     }
 
