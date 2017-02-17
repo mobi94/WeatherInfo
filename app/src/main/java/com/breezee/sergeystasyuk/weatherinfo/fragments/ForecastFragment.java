@@ -72,15 +72,9 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
                 swipeRefreshLayout.setRefreshing(true);
                 trackLocation.buildRequest();
             }
-            else {
-                getData();
-                setupRecyclerView();
-            }
+            else if (getData()) setupRecyclerView();
         }
-        else {
-            getData();
-            setupRecyclerView();
-        }
+        else if (getData()) setupRecyclerView();
 
         setupPresenters();
 
@@ -127,11 +121,12 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
                 MainActivity.MY_PREFERENCES, MainActivity.FIVE_DAYS_FORECAST_DATA, fiveDaysForecastResult);
     }
 
-    public void getData() {
+    public boolean getData() {
         geopositionSearchResult = MainActivity.getSavedObjectFromPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, GeopositionSearchResult.class);
         fiveDaysForecastResult = MainActivity.getSavedObjectFromPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.FIVE_DAYS_FORECAST_DATA, FiveDaysForecastResult.class);
+        return geopositionSearchResult != null && fiveDaysForecastResult != null;
     }
 
     @Override

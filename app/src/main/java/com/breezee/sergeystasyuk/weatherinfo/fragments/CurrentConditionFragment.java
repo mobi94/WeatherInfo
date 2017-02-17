@@ -80,15 +80,9 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
                 swipeRefreshLayout.setRefreshing(true);
                 trackLocation.buildRequest();
             }
-            else {
-                getData();
-                inflateViews();
-            }
+            else if (getData()) inflateViews();
         }
-        else {
-            getData();
-            inflateViews();
-        }
+        else if (getData()) inflateViews();
 
         return view;
     }
@@ -183,11 +177,12 @@ public class CurrentConditionFragment extends Fragment implements AccuweatherAPI
                 MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, dailyForecastResult);
     }
 
-    public void getData() {
+    public boolean getData() {
         geopositionSearchResult = MainActivity.getSavedObjectFromPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.GEOPOSITION_DATA, GeopositionSearchResult.class);
         dailyForecastResult = MainActivity.getSavedObjectFromPreference(getContext(),
                 MainActivity.MY_PREFERENCES, MainActivity.DAILY_FORECAST_DATA, DailyForecastResult.class);
+        return geopositionSearchResult != null && dailyForecastResult != null;
     }
 
     /*
