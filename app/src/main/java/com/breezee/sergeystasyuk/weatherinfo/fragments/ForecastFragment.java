@@ -64,6 +64,7 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
         recyclerView = (RecyclerView) view.findViewById(R.id.listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(itemArrayAdapter);
 
         trackLocation = new TrackLocation(getContext(), this::sendGeopositionSearchRequest);
 
@@ -72,9 +73,9 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
                 swipeRefreshLayout.setRefreshing(true);
                 trackLocation.buildRequest();
             }
-            else if (getData()) setupRecyclerView();
+            else loadDataFromLocalStore();
         }
-        else if (getData()) setupRecyclerView();
+        else loadDataFromLocalStore();
 
         setupPresenters();
 
@@ -107,11 +108,19 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
     }
 
     /*
-     * Setting adapter for recyclerView.
+     * RecyclerView adapter updating.
      * */
-    public void setupRecyclerView(){
-        recyclerView.setAdapter(itemArrayAdapter);
+    public void updateRecyclerView(){
         itemArrayAdapter.notifyDataSetChanged();
+    }
+
+    /*
+     * If no internet connection - load data from shared preferences.
+     * */
+    public void loadDataFromLocalStore(){
+        if (getData()) {
+            updateRecyclerView();
+        }
     }
 
     public void saveData(){
@@ -164,7 +173,7 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
         swipeRefreshLayout.setRefreshing(false);
         this.fiveDaysForecastResult = fiveDaysForecastResult;
         saveData();
-        setupRecyclerView();
+        updateRecyclerView();
     }
 
     @Override
@@ -180,7 +189,9 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
 
         @Override
         public int getItemCount() {
-            return fiveDaysForecastResult.getDailyForecasts().size();
+            if (fiveDaysForecastResult != null)
+                return fiveDaysForecastResult.getDailyForecasts().size();
+            else return 1;
         }
 
         @Override
@@ -191,18 +202,20 @@ public class ForecastFragment extends Fragment implements AccuweatherAPIView<Fiv
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
-            holder.dayOfWeek.setText(android.text.format.DateFormat.format("dd.MM, EEEE",
-                    new Date(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getEpochDate() * 1000)));
-            holder.dayDescription.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getDay().getIconPhrase());
-            holder.dayTemperature.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).
-                    getTemperature().getMaximum().getValue().toString() + " °C");
-            holder.dayIcon.setImageResource(MainActivity.getDrawableResourceId(getContext(), "weather",
-                    fiveDaysForecastResult.getDailyForecasts().get(listPosition).getDay().getIcon()));
-            holder.nightDescription.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getNight().getIconPhrase());
-            holder.nightTemperature.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).
-                    getTemperature().getMinimum().getValue().toString() + " °C");
-            holder.nightIcon.setImageResource(MainActivity.getDrawableResourceId(getContext(), "weather",
-                    fiveDaysForecastResult.getDailyForecasts().get(listPosition).getNight().getIcon()));
+            if (fiveDaysForecastResult != null) {
+                holder.dayOfWeek.setText(android.text.format.DateFormat.format("dd.MM, EEEE",
+                        new Date(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getEpochDate() * 1000)));
+                holder.dayDescription.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getDay().getIconPhrase());
+                holder.dayTemperature.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).
+                        getTemperature().getMaximum().getValue().toString() + " °C");
+                holder.dayIcon.setImageResource(MainActivity.getDrawableResourceId(getContext(), "weather",
+                        fiveDaysForecastResult.getDailyForecasts().get(listPosition).getDay().getIcon()));
+                holder.nightDescription.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).getNight().getIconPhrase());
+                holder.nightTemperature.setText(fiveDaysForecastResult.getDailyForecasts().get(listPosition).
+                        getTemperature().getMinimum().getValue().toString() + " °C");
+                holder.nightIcon.setImageResource(MainActivity.getDrawableResourceId(getContext(), "weather",
+                        fiveDaysForecastResult.getDailyForecasts().get(listPosition).getNight().getIcon()));
+            }
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {

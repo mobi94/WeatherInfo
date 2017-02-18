@@ -18,6 +18,7 @@
 
             <TextView
                 android:id="@+id/day_of_week"
+                android:text="@string/forecast_list_item_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
@@ -27,7 +28,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/day_of_week"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -66,7 +66,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/details"
                 android:background="@color/background"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp" />
@@ -74,7 +73,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/day_of_week"
                 android:gravity="center_vertical">
 
                 <TextView

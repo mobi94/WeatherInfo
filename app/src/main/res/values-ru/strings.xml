@@ -31,4 +31,5 @@
 
     <string name="track_location_not_found">Расположение не найдено..!</string>
     <string name="no_internet_connection">Не удается подключиться к интернету</string>
+    <string name="forecast_list_item_data">Нет данных</string>
 </resources>
