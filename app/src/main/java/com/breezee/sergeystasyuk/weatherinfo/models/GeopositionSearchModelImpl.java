@@ -20,8 +20,22 @@ import rx.schedulers.Schedulers;
 
 public class GeopositionSearchModelImpl implements GeopositionSearchModel {
     private LocationsAPIInterface apiInterface;
+    private String url = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/";
 
     public GeopositionSearchModelImpl() {
+        buildAPIRequest();
+    }
+
+    public GeopositionSearchModelImpl(String url) {
+        this.url = url;
+        buildAPIRequest();
+    }
+
+    public LocationsAPIInterface getApiInterface() {
+        return apiInterface;
+    }
+
+    private void buildAPIRequest(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -31,7 +45,7 @@ public class GeopositionSearchModelImpl implements GeopositionSearchModel {
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .setLenient()
                         .create()))
-                .baseUrl("http://dataservice.accuweather.com/locations/v1/cities/geoposition/")
+                .baseUrl(url)
                 .client(client)
                 .build();
         apiInterface = retrofit.create(LocationsAPIInterface.class);

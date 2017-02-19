@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Key": "323903",
+  "Type": "City",
+  "Rank": 21,
+  "LocalizedName": "Харьков",
+  "EnglishName": "Kharkiv",
+  "PrimaryPostalCode": "",
+  "Region": {
+    "ID": "EUR",
+    "LocalizedName": "Европа",
+    "EnglishName": "Europe"
+  },
+  "Country": {
+    "ID": "UA",
+    "LocalizedName": "Украина",
+    "EnglishName": "Ukraine"
+  },
+  "AdministrativeArea": {
+    "ID": "63",
+    "LocalizedName": "Харьковская",
+    "EnglishName": "Kharkiv",
+    "Level": 1,
+    "LocalizedType": "Провинция",
+    "EnglishType": "Province",
+    "CountryID": "UA"
+  },
+  "TimeZone": {
+    "Code": "EET",
+    "Name": "Europe/Kiev",
+    "GmtOffset": 2,
+    "IsDaylightSaving": false,
+    "NextOffsetChange": "2017-03-26T01:00:00Z"
+  },
+  "GeoPosition": {
+    "Latitude": 49.976,
+    "Longitude": 36.267,
+    "Elevation": {
+      "Metric": {
+        "Value": 129,
+        "Unit": "m",
+        "UnitType": 5
+      },
+      "Imperial": {
+        "Value": 423,
+        "Unit": "ft",
+        "UnitType": 0
+      }
+    }
+  },
+  "IsAlias": false,
+  "SupplementalAdminAreas": [],
+  "DataSets": []
+}

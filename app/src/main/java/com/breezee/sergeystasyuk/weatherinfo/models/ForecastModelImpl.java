@@ -22,8 +22,22 @@ import rx.schedulers.Schedulers;
 
 public class ForecastModelImpl implements ForecastModel {
     private ForecastAPIInterface apiInterface;
+    private String url = "http://dataservice.accuweather.com/";
 
     public ForecastModelImpl() {
+        buildAPIRequest();
+    }
+
+    public ForecastModelImpl(String url) {
+        this.url = url;
+        buildAPIRequest();
+    }
+
+    public ForecastAPIInterface getApiInterface() {
+        return apiInterface;
+    }
+
+    private void buildAPIRequest(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -33,7 +47,7 @@ public class ForecastModelImpl implements ForecastModel {
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .setLenient()
                         .create()))
-                .baseUrl("http://dataservice.accuweather.com/")
+                .baseUrl(url)
                 .client(client)
                 .build();
         apiInterface = retrofit.create(ForecastAPIInterface.class);

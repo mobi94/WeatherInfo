@@ -1,0 +1,160 @@
+{
+  "Headline": {
+    "EffectiveDate": "2017-02-20T19:00:00+02:00",
+    "EffectiveEpochDate": 1487610000,
+    "Severity": 2,
+    "Text": "Гололед В понедельник вечером",
+    "Category": "ice",
+    "EndDate": "2017-02-21T01:00:00+02:00",
+    "EndEpochDate": 1487631600,
+    "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/extended-weather-forecast/323903?unit=c",
+    "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?unit=c"
+  },
+  "DailyForecasts": [
+    {
+      "Date": "2017-02-18T07:00:00+02:00",
+      "EpochDate": 1487394000,
+      "Temperature": {
+        "Minimum": {
+          "Value": 0.3,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 1.1,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 7,
+        "IconPhrase": "Облачно"
+      },
+      "Night": {
+        "Icon": 7,
+        "IconPhrase": "Облачно"
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=1&unit=c",
+      "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=1&unit=c"
+    },
+    {
+      "Date": "2017-02-19T07:00:00+02:00",
+      "EpochDate": 1487480400,
+      "Temperature": {
+        "Minimum": {
+          "Value": -1.4,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 2,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 7,
+        "IconPhrase": "Облачно"
+      },
+      "Night": {
+        "Icon": 36,
+        "IconPhrase": "Переменная облачность"
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=2&unit=c",
+      "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=2&unit=c"
+    },
+    {
+      "Date": "2017-02-20T07:00:00+02:00",
+      "EpochDate": 1487566800,
+      "Temperature": {
+        "Minimum": {
+          "Value": -1.9,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 2.2,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 2,
+        "IconPhrase": "Ясно"
+      },
+      "Night": {
+        "Icon": 24,
+        "IconPhrase": "Лёд"
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=3&unit=c",
+      "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=3&unit=c"
+    },
+    {
+      "Date": "2017-02-21T07:00:00+02:00",
+      "EpochDate": 1487653200,
+      "Temperature": {
+        "Minimum": {
+          "Value": 1.1,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 4,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 12,
+        "IconPhrase": "Ливни"
+      },
+      "Night": {
+        "Icon": 22,
+        "IconPhrase": "Снег"
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=4&unit=c",
+      "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=4&unit=c"
+    },
+    {
+      "Date": "2017-02-22T07:00:00+02:00",
+      "EpochDate": 1487739600,
+      "Temperature": {
+        "Minimum": {
+          "Value": -3,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Maximum": {
+          "Value": 2.9,
+          "Unit": "C",
+          "UnitType": 17
+        }
+      },
+      "Day": {
+        "Icon": 21,
+        "IconPhrase": "Малооблачно, снежные вихри"
+      },
+      "Night": {
+        "Icon": 38,
+        "IconPhrase": "Значительная облачность"
+      },
+      "Sources": [
+        "AccuWeather"
+      ],
+      "MobileLink": "http://m.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=5&unit=c",
+      "Link": "http://www.accuweather.com/ru/ua/kharkiv/323903/daily-weather-forecast/323903?day=5&unit=c"
+    }
+  ]
+}
