@@ -1,7 +1,10 @@
 # WeatherInfo
 It is an android weather application that uses AccuWeather API.
-The app displays detailed weather information for the current day and the brief information about the weather for next 5 days. Device coordinates are used for weather forecasting. 
-Project structure is divided according to the MVP pattern. Retrofit and GSON libraries are used to send and process the REST request.
+The app displays detailed weather information for the current day and the brief information about the weather for next 5 days. 
+Device coordinates are used for weather forecasting. 
+
+Project structure is divided according to the MVP pattern. 
+Retrofit and GSON libraries are used to send and process the REST request.
 Also several unit tests are used to check the correctness of the REST request.
 
 ## Screenshots
